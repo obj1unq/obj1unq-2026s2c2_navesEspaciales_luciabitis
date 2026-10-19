@@ -33,12 +33,14 @@ class NaveDeCarga inherits Nave {
   method enFalta() = self.sobrecargada() and self.excedidaDeVelocidad()
   
   method acercamientoDeControl() {
-    if (self.enFalta()) self.recibirAmenaza()
+    if (self.enFalta()) {
+      self.recibirAmenaza()
+    }
   }
 }
 
 class NaveDePasajeros inherits Nave {
-  var property alarma = false
+  var alarma = false
   const cantidadDePasajeros
   
   method tripulacion() = cantidadDePasajeros + 4
@@ -51,6 +53,10 @@ class NaveDePasajeros inherits Nave {
   
   override method recibirAmenaza() {
     alarma = true
+  }
+
+  method alarma() {
+    return alarma
   }
 }
 
@@ -71,7 +77,7 @@ class NaveDeCombate inherits Nave {
   }
   
   override method preparseParaViajar() {
-    velocidad = (velocidad + 15000).min(300000)
+    super()
     modo.preparseParaViajar(self)
   }
 }
@@ -105,13 +111,10 @@ class NaveDeResiduosRadioactivos inherits NaveDeCarga {
   override method recibirAmenaza() {
     velocidad = 0
   }
-  
-  method sellarAlVacio() {
-    selladaAlVacio = true
-  }
+
   
   override method preparseParaViajar() {
-    velocidad = (velocidad + 15000).min(300000)
-    self.sellarAlVacio()
+    super()
+    selladaAlVacio = true
   }
 }
